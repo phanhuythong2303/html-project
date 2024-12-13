@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Bán Áo Đấu</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://image.slidesdocs.com/responsive-images/background/stunning-3d-visualization-of-a-soccer-football-stadium-with-vibrant-lighting-powerpoint-background_8499fd761f__960_540.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .hidden {
+            display: none;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(236, 243, 244, 0.2);
+        }
+        .container h2 {
+            text-align: center;
+            color: #333;
+        }
+        .container input, .container button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .container button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #0056b3;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            color: white;
+        }
+        .navbar .back-btn {
+            cursor: pointer;
+            color: white;
+            font-size: 16px;
+            text-decoration: underline;
+        }
+        .navbar .back-btn:hover {
+            color: #ddd;
+        }
+        .navbar .cart-btn {
+            cursor: pointer;
+            background: white;
+            color: #4CAF50;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .navbar .cart-btn:hover {
+            background: #ddd;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        .club-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .club {
+            padding: 10px 20px;
+            background: #ff9500;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .club:hover {
+            background-color: #ff5722;
+            transform: scale(1.1);
+        }
+        .product-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .product {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            width: 200px;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .product button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .product button:hover {
+            background-color: #218838;
+        }
+        .product select {
+            margin-top: 10px;
+            padding: 5px;
+            width: 100%;
+            border-radius: 4px;
+        }
+        .cart-container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .cart-item img {
+            width: 50px;
+            height: auto;
+        }
+        .cart-item button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .cart-item button:hover {
+            background-color: #c82333;
+        }
+        .checkout-container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .checkout-container input, .checkout-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .checkout-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .checkout-container button:hover {
+            background-color: #218838;
+        }
+
+        /* Footer style */
+        .footer {
+            background: rgba(0, 0, 0, 0.5); /* Nền mờ */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 2px solid #fff;
+        }
+
+        .footer p {
+            margin: 10px 0;
+            color:whitesmoke;
+        }
+
+        /* Show footer when logged in */
+        .show-footer {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Trang đăng nhập -->
+    <div class="container" id="login-page">
+        <h2>Đăng nhập</h2>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Tên đăng nhập" required>
+            <input type="password" id="password" placeholder="Mật khẩu" required>
+            <button type="submit">Đăng nhập</button>
+        </form>
+    </div>
+     <!-- Footer sẽ hiện lên khi đăng nhập -->
+     <div class="footer hidden" id="footer">
+        <p>Chào mừng đến với Shop Bán Áo Đấu</p>
+        <p>Số hotline: 1800-123-456</p>
+        <p>Địa chỉ: Số 123, Đường ABC, Quận 1, TP.HCM</p>
+        <p>Liên hệ: <a href="mailto:shop@banaodau.com" style="color: white;">shop@banaodau.com</a></p>
+    </div>
+
+    <!-- Trang chọn CLB -->
+    <div class="main-container hidden" id="club-page">
+        <div class="navbar">
+            <span class="back-btn" id="back-to-login">Quay lại</span>
+            <h2>Chọn Câu Lạc Bộ</h2>
+            <span class="cart-btn" id="view-cart">Giỏ hàng</span>
+        </div>
+        <div class="club-list">
+            <div class="club" data-club="MU">Manchester United</div>
+            <div class="club" data-club="RM">Real Madrid</div>
+            <div class="club" data-club="BAR">Barcelona</div>
+            <div class="club" data-club="PSG">PSG</div>
+            <div class="club" data-club="CHE">Chelsea</div>
+        </div>
+    </div>
+
+    <!-- Trang sản phẩm -->
+    <div class="main-container hidden" id="product-page">
+        <div class="navbar">
+            <span class="back-btn" id="back-to-clubs">Quay lại</span>
+            <h2 id="club-title"></h2>
+            <span class="cart-btn" id="view-cart">Giỏ hàng</span>
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+    </div>
+
+    <!-- Trang giỏ hàng -->
+    <div class="cart-container hidden" id="cart-page">
+        <div class="navbar">
+            <span class="back-btn" id="back-to-products">Quay lại</span>
+            <h2>Giỏ hàng</h2>
+        </div>
+        <div id="cart-items"></div>
+        <button id="checkout-btn">Thanh toán</button>
+    </div>
+
+    <!-- Trang thanh toán -->
+    <div class="checkout-container hidden" id="checkout-page">
+        <div class="navbar">
+            <span class="back-btn" id="back-to-cart">Quay lại</span>
+            <h2>Thông tin vận chuyển</h2>
+        </div>
+        <form id="checkout-form">
+            <input type="email" placeholder="Email" required>
+            <input type="text" placeholder="Họ và tên" required>
+            <input type="tel" placeholder="Số điện thoại" required>
+            <input type="text" placeholder="Địa chỉ" required>
+            <select required>
+                <option value="" disabled selected>Chọn Tỉnh</option>
+                <option value="HCM">Hồ Chí Minh</option>
+                <option value="HN">Hà Nội</option>
+            </select>
+            <select required>
+                <option value="" disabled selected>Chọn Quận/Huyện</option>
+                <option value="1">Quận 1</option>
+                <option value="2">Quận 2</option>
+            </select>
+
+            <!-- Chọn phương thức thanh toán -->
+            <select required>
+                <option value="" disabled selected>Chọn phương thức thanh toán</option>
+                <option value="cash">Thanh toán tiền mặt</option>
+                <option value="bank">Chuyển khoản ngân hàng</option>
+            </select>
+
+            <button type="submit">Hoàn tất thanh toán</button>
+        </form>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById("login-form");
+        const loginPage = document.getElementById("login-page");
+        const clubPage = document.getElementById("club-page");
+        const productPage = document.getElementById("product-page");
+        const cartPage = document.getElementById("cart-page");
+        const checkoutPage = document.getElementById("checkout-page");
+        const clubTitle = document.getElementById("club-title");
+        const productGrid = document.getElementById("product-grid");
+        const cartItemsContainer = document.getElementById("cart-items");
+        const checkoutBtn = document.getElementById("checkout-btn");
+        const checkoutForm = document.getElementById("checkout-form");
+        const backToLogin = document.getElementById("back-to-login");
+        const backToClubs = document.getElementById("back-to-clubs");
+        const backToCart = document.getElementById("back-to-cart");
+        const backToProducts = document.getElementById("back-to-products");
+        const viewCartBtns = document.querySelectorAll("#view-cart");
+        const footer = document.getElementById("footer");
+
+        let cart = [];
+
+        const products = {
+            MU: [
+                { name: "Áo đấu MU sân nhà ", price: "900,000 VND", image: "https://www.sporter.vn/wp-content/uploads/2017/06/Vn-mu-do-2024-1.jpg" },
+                { name: "Áo đấu MU sân khách ", price: "950,000 VND", image: "https://www.sporter.vn/wp-content/uploads/2017/06/Vn-mu-xanh-den-2024-3.jpg" }
+            ],
+            RM: [
+                { name: "Áo đấu Real sân nhà", price: "700,000 VND", image: "https://www.sporter.vn/wp-content/uploads/2017/06/Vn-real-madrid-trang-1.jpg" },
+                { name: "Áo đấu Real sân khách", price: "750,000 VND", image: "https://www.sporter.vn/wp-content/uploads/2017/06/Vn-real-madrid-cam-2024-1.jpg" }
+            ],
+            BAR: [
+                { name: "Áo đấu Barca sân nhà", price: "700,000 VND", image: "https://kingmensport.vn/wp-content/uploads/2024/05/z5489075381169_ddb3caa1fafac6f7ee7ed82ce337a3a5.jpg" },
+                { name: "Áo đấu Barca sân khách", price: "750,000 VND", image: "https://hidosport.vn/wp-content/uploads/2024/07/quan-ao-barcelona-mau-den-san-khach-2025-ao-player.webp" }
+            ],
+            PSG: [
+                { name: "Áo đấu PSG sân nhà", price: "800,000 VND", image: "https://www.sporter.vn/wp-content/uploads/2017/06/Vn-psg-xanh-den-2024-3.jpg" },
+                { name: "Áo đấu PSG sân khách", price: "850,000 VND", image: "https://hidosport.vn/wp-content/uploads/2023/07/quan-ao-bong-da-psg-2024-mau-trang-san-khach-hang-viet-kieu-1.jpg" }
+            ],
+            CHE: [
+                { name: "Áo đấu Chelsea sân nhà", price: "900,000 VND", image: "https://www.sporter.vn/wp-content/uploads/2017/06/Vn-chelsea-xanh-1.jpg" },
+                { name: "Áo đấu Chelsea sân khách", price: "950,000 VND", image: "https://hidosport.vn/wp-content/uploads/2024/09/quan-ao-chelsea-mau-be-san-khach-2025-ao-player.webp" }
+            ]
+        };
+
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            loginPage.classList.add("hidden");
+            clubPage.classList.remove("hidden");
+            footer.classList.add("show-footer");
+        });
+
+        backToLogin.addEventListener("click", () => {
+            clubPage.classList.add("hidden");
+            loginPage.classList.remove("hidden");
+            footer.classList.remove("show-footer");
+        });
+
+        backToClubs.addEventListener("click", () => {
+            productPage.classList.add("hidden");
+            clubPage.classList.remove("hidden");
+        });
+
+        viewCartBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                productPage.classList.add("hidden");
+                clubPage.classList.add("hidden");
+                cartPage.classList.remove("hidden");
+                renderCart();
+            });
+        });
+
+        document.querySelectorAll(".club").forEach((club) => {
+            club.addEventListener("click", () => {
+                const clubKey = club.getAttribute("data-club");
+                clubTitle.textContent = `Sản phẩm của ${club.textContent}`;
+                renderProducts(clubKey);
+                clubPage.classList.add("hidden");
+                productPage.classList.remove("hidden");
+            });
+        });
+
+        function renderProducts(clubKey) {
+            productGrid.innerHTML = "";
+            products[clubKey].forEach((product) => {
+                const productHTML = `
+                    <div class="product">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>${product.price}</p>
+                        <label for="size">Chọn size (phù hợp với cân nặng):</label>
+                        <select id="size" required>
+                            <option value="S">S - Dưới 45kg</option>
+                            <option value="M">M - 45kg đến 55kg</option>
+                            <option value="L">L - 55kg đến 70kg</option>
+                            <option value="XL">XL - Trên 70kg</option>
+                        </select>
+                        <button onclick="addToCart('${product.name}', '${product.price}', '${product.image}')">Thêm vào giỏ hàng</button>
+                    </div>
+                `;
+                productGrid.innerHTML += productHTML;
+            });
+        }
+
+        function addToCart(name, price, image) {
+            cart.push({ name, price, image });
+            alert("Đã thêm vào giỏ hàng!");
+        }
+
+        function renderCart() {
+            cartItemsContainer.innerHTML = "";
+            cart.forEach((item, index) => {
+                const itemHTML = `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <h4>${item.name}</h4>
+                        <p>${item.price}</p>
+                        <button onclick="removeFromCart(${index})">Xóa</button>
+                    </div>
+                `;
+                cartItemsContainer.innerHTML += itemHTML;
+            });
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        checkoutBtn.addEventListener("click", () => {
+            cartPage.classList.add("hidden");
+            checkoutPage.classList.remove("hidden");
+        });
+
+        checkoutForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert("Đặt hàng thành công!");
+            location.reload();
+        });
+
+        backToProducts.addEventListener("click", () => {
+            cartPage.classList.add("hidden");
+            productPage.classList.remove("hidden");
+        });
+
+        backToCart.addEventListener("click", () => {
+            checkoutPage.classList.add("hidden");
+            cartPage.classList.remove("hidden");
+        });
+    </script>
+</body>
+</html>
